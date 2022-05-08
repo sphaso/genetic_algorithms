@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1e7a2bfdb346baafec1f92c7dd5fddf5be88300b9ed31bd60fd1b34df7de680f
+-- hash: ed5338a2837e51dbaef5510f8b9acd01375a7149051fbe1961ac2554458a6078
 
 name:           onemax
 version:        0.1.0.0
@@ -27,8 +27,8 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
       Population
+      Types
   other-modules:
       Paths_onemax
   hs-source-dirs:
