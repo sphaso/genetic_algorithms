@@ -1,25 +1,39 @@
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module Population (cycleOfLife) where
+module Problem (cycleOfLife) where
 
 import Control.Monad.State (State, evalState, get, put, replicateM)
 import Data.Function (on)
 import Data.List (unfoldr, sortBy, maximumBy)
+import Data.Ratio (Ratio, (%))
 import Data.Vector (Vector, update, fromList)
+import Data.Text (Text, pack)
+import Data.Text.Metrics (jaro)
 import qualified Data.Vector as V
 import System.Random (initStdGen, uniformR, StdGen)
 
 import Types
 
-type Genes = Vector Int
+type Genes = Vector Char
 type C = Chromo Genes
+
+target :: Text
+target = "supercalifragilisticexpialidocious"
+
+randChar :: Petri Char
+randChar = do
+  g <- get
+  let (i, newG) = uniformR ('a', 'z') g
+  put newG
+  return i
 
 instance Chromosome C where
     mkChromosome = do
-        genes <- V.replicateM 1000 rand01
+        genes <- V.replicateM 34 randChar
         pure $ Chromo { genes = genes, age = 0, c_fitness = 0 }
-    fitness = sum . genes
+    fitness c = jaro target (pack $ V.toList $ genes c)
     mutate chromosome = do
       g <- get
       case uniformR (0 :: Double, 1 :: Double) g of
@@ -53,17 +67,10 @@ instance Generation C where
           )
           pairs
 
-maxFitness :: Int
-maxFitness = 900
+maxFitness :: Ratio Int
+maxFitness = 1 % 1
 
-rand01 :: Petri Int
-rand01 = do
-  g <- get
-  let (i, newG) = uniformR (0 :: Int, 1 :: Int) g
-  put newG
-  return i
-
-cycleOfLife :: IO Int
+cycleOfLife :: IO (Ratio Int)
 cycleOfLife = do
     g <- initStdGen
     let bestPop = evalState go g
