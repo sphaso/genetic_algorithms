@@ -1,3 +1,5 @@
+{-# LANGUAGE MultiParamTypeClasses #-}
+
 module Types where
 
 import System.Random (initStdGen, uniformR, StdGen)
@@ -18,13 +20,13 @@ class Chromosome a => Generation a where
     evaluate :: Population a -> Population a
     select :: Population a -> [(a, a)]
     crossover :: [(a, a)] -> Petri (Population a)
-    evolve :: Int -> Population a -> Petri (Population a)
-    evolve maxFitness pop = do
+    evolve :: (a -> Int) -> Population a -> Petri (Population a)
+    evolve age pop = do
       let eval = evaluate pop
-      if fitness (head eval) >= maxFitness then
+      if age (head eval) >= 500000 then
         return pop
       else do
         children <- crossover $ select eval
-        evolve maxFitness =<< mapM mutate children
+        evolve age =<< mapM mutate children
 
 

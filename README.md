@@ -10,3 +10,6 @@ The typeclass implementation is not quite as abstract as the one in the book, be
 
 ## Chapter 3
 This covers one last refactoring of `onemax` and introduces `speller`. Both are using the same `Types` idea from Chapter 2.
+
+## Chapter 4
+This covers `cargo` and `portfolio`. I didn't modify `onemax` for the interactive fitness function example as it seemed easy enough to understand.

@@ -1,0 +1,67 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 2f9ebe2b840d8f7f53c43eaf4f5d04e554426803084a4238020b1d6148af347e
+
+name:           portfolio
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/portfolio#readme>
+homepage:       https://github.com/githubuser/portfolio#readme
+bug-reports:    https://github.com/githubuser/portfolio/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2022 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/portfolio
+
+library
+  exposed-modules:
+      Problem
+      Types
+  other-modules:
+      Paths_portfolio
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , mtl
+    , random
+    , text
+    , vector
+  default-language: Haskell2010
+
+executable portfolio-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_portfolio
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , portfolio
+  default-language: Haskell2010
+
+test-suite portfolio-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_portfolio
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , portfolio
+  default-language: Haskell2010
